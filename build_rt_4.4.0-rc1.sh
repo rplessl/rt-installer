@@ -151,17 +151,19 @@ cpanm GD::Graph
 
 # RT 
 if prepare https://download.bestpractical.com/pub/rt/devel rt-4.4.0rc1.tar.gz; then
-        ./configure --prefix=$PREFIX \
-                    --enable-gpg \
-                    --with-db-type=Pg
+	./configure --prefix=$PREFIX \
+                --with-my-user-group \
+                --enable-gd \
+                 --enable-gpg \
+                 --with-db-type=Pg
                     
-        make testdeps
-        make install RT_LIB_PATH=$PREFIX/lib/perl
-        # remove unneeded files
-        rm -rf $PREFIX/lib/perl/t
-        # copy docs
-        cp -a docs $PREFIX
-        cp README $PREFIX/docs
-        # fix permissions
-        chmod -R a+rX $PREFIX
+    make testdeps
+    make install RT_LIB_PATH=$PREFIX/lib/perl
+    # remove unneeded files
+    rm -rf $PREFIX/lib/perl/t
+    # copy docs
+    cp -a docs $PREFIX
+    cp README $PREFIX/docs
+    # fix permissions
+    chmod -R a+rX $PREFIX
 fi
