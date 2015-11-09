@@ -5,11 +5,17 @@ export PREFIX=`pwd`
 . `dirname $0`/sdbs/sdbs.inc
 
 # Build Perl 5.22 as basic perl
-cd sdbs 
+cd sdbs
 ./build_perl-5.22.sh
 cd ..
 
+#################
+### Libraries ###
+#################
 
+sudo apt-get install -y graphviz-dev
+sudo apt-get install -y libpq-dev
+sudo apt-get install -y libgd-dev
 
 #########################
 ### SSL Functionality ###
@@ -22,18 +28,13 @@ cpanm LWP::Protocol::https
 ### RT Dependencies ###
 #######################
 
-### Libraries ###
-sudo apt-get install -y graphviz-dev
-sudo apt-get install -y libpq-dev
-sudo apt-get install -y libgd-dev
-
 # CLI dependencies:
 cpanm HTTP::Request::Common
 cpanm Term::ReadKey
 cpanm Text::ParseWords
 cpanm Term::ReadLine
 cpanm LWP
-cpanm Getopt::Long 
+cpanm Getopt::Long
 # CORE dependencies:
 cpanm DateTime::Locale
 cpanm Scope::Upper
@@ -147,18 +148,17 @@ cpanm Convert::Color
 cpanm GD
 cpanm GD::Text
 cpanm GD::Graph
-			
 
-# RT 
+# RT
 if prepare https://download.bestpractical.com/pub/rt/devel rt-4.4.0rc1.tar.gz; then
 	./configure --prefix=$PREFIX \
                 --with-my-user-group \
                 --enable-gd \
-                 --enable-gpg \
-                 --with-db-type=Pg
-                    
+                --enable-gpg \
+                --with-db-type=Pg
+
     make testdeps
-    make install RT_LIB_PATH=$PREFIX/lib/perl
+    make install RT_LIB_PATH=$PREFIX/lib/perl5
     # remove unneeded files
     rm -rf $PREFIX/lib/perl/t
     # copy docs
@@ -167,3 +167,6 @@ if prepare https://download.bestpractical.com/pub/rt/devel rt-4.4.0rc1.tar.gz; t
     # fix permissions
     chmod -R a+rX $PREFIX
 fi
+
+cpanm SMS::Send::Twilio
+cpanm RT::Extension::SMSNotify
