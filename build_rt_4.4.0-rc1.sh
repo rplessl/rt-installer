@@ -192,5 +192,11 @@ if prepare https://download.bestpractical.com/pub/rt/devel rt-4.4.0rc1.tar.gz; t
     chmod -R a+rX $PREFIX
 fi
 
+[ -e $PREFIX/lib/RT ] || ln -s $PREFIX/lib/perl5/RT $PREFIX/lib/RT
+
 cpanm SMS::Send::Twilio
 cpanm RT::Extension::SMSNotify
+
+#rm -rf $PREFIX/work
+#rm -f  $PREFIX/build.log
+#rm -f  $PREFIX/latest-build
