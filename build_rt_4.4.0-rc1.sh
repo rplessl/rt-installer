@@ -20,7 +20,7 @@ cd ..
 RELEASE=`lsb_release -d`
 if [[ $RELEASE =~ "Ubuntu 14.04.3 LTS" ]]; then
    cat << 'EOT'
-
+#####################################################
 # Install necessary Services with Debian packages
 
 sudo locale-gen en_US.UTF-8
@@ -37,6 +37,7 @@ sudo apt-get update
 
 sudo apt-get install -y postgresql-9.4
 sudo apt-get install -y libpq-dev
+#####################################################
 EOT
 fi
 
