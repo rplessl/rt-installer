@@ -13,9 +13,32 @@ cd ..
 ### Libraries ###
 #################
 
+########################
+### for Ubuntu 14.04 ###
+########################
+
+RELEASE=`lsb_release -d`
+if [[ $RELEASE =~ "Ubuntu 14.04.3 LTS" ]]; then
+   cat << 'EOT'
+
+# Install necessary Services with Debian packages
+
+sudo locale-gen en_US.UTF-8
+sudo locale-gen de_CH.UTF-8
+
 sudo apt-get install -y graphviz-dev
-sudo apt-get install -y libpq-dev
 sudo apt-get install -y libgd-dev
+sudo apt-get install -y libssl-dev
+
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+sudo apt-key add -
+echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >  /etc/apt/sources.list.d/pgdg.list
+sudo apt-get update
+
+sudo apt-get install -y postgresql-9.4
+sudo apt-get install -y libpq-dev
+EOT
+fi
 
 #########################
 ### SSL Functionality ###
